@@ -2,6 +2,7 @@ import time
 from ppadb.client import Client as AdbClient
 
 def connect():
+    
     client = AdbClient(host='127.0.0.1', port=5037)
 
     devices = client.devices()
@@ -39,4 +40,17 @@ def rolar_tela(vezes):
         print(f'Rolou a tela {contador +1} vezes')
         contador = contador + 1
 
-rolar_tela(50)
+def abir_navegador(pesquisa):
+    device, client = connect()
+
+    time.sleep(2)
+
+    device.shell('input keyevent 64')#abrir o navegador
+    barra_pesquisa = '550 100' # x y
+    
+    device.shell(f'input tap {barra_pesquisa}')#aperta na barar de pesquisa
+    time.sleep(2)#respira por 5 segundos
+    device.shell(f'input text "{pesquisa}"')# insere o texto à ser pesquisado
+    device.shell('input keyevent 66')# aperta enter
+
+abir_navegador("felipe dantas")

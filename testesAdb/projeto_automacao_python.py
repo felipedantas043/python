@@ -40,17 +40,25 @@ def rolar_tela(vezes):
         print(f'Rolou a tela {contador +1} vezes')
         contador = contador + 1
 
-def abir_navegador(pesquisa):
+def abir_navegador(url):
     device, client = connect()
 
     time.sleep(2)
 
     device.shell('input keyevent 64')#abrir o navegador
+    print("Navegador aberto!")
     barra_pesquisa = '550 100' # x y
     
     device.shell(f'input tap {barra_pesquisa}')#aperta na barar de pesquisa
-    time.sleep(2)#respira por 5 segundos
-    device.shell(f'input text "{pesquisa}"')# insere o texto à ser pesquisado
-    device.shell('input keyevent 66')# aperta enter
+    print("Barra de pesquisa clicada!")
 
-abir_navegador("felipe dantas")
+    time.sleep(2)#respira por 5 segundos
+    print("Respirou.")
+    
+    device.shell(f'input text "{url}"')# insere o texto à ser pesquisado
+    print("escrevendo...")
+
+    device.shell('input keyevent 66')# aperta enter
+    print("enter")
+
+abir_navegador("https://instagram.com/felipedantas043")

@@ -1,28 +1,10 @@
 import time
-from ppadb.client import Client as AdbClient
+from ppadb.device import Device
+from teste_scrcpy import connectAdb
 
-def connect():
-    
-    client = AdbClient(host='127.0.0.1', port=5037)
+device, client = connectAdb.connect()
 
-    devices = client.devices()
-
-    if len(devices) == 0:
-        print('No devices (nenhum dispositivo encontrado!)')
-        quit()
-
-    device = devices[0]
-
-    print(f'connected to {device}')
-
-    return device, client
-
-# dando comandos para o celular:
-# device, client = connect()
-# device.shell("input tap 927 2145")
-
-
-def rolar_tela(vezes):
+def rolar_tela_vertical(vezes):
 
     #variaveis que armazenam onde começa a rolagem na tela, termina e a duração.
     start_x = 500
@@ -31,7 +13,6 @@ def rolar_tela(vezes):
     end_y = 700
     duration_ms = 300
 
-    device, client = connect()
     
     #loop para rolar a tela varias vezes
     contador = 0
@@ -39,9 +20,46 @@ def rolar_tela(vezes):
         device.shell(f'input swipe {start_x} {start_y} {end_x} {end_y} {duration_ms}')#aqui são passado os valores  das variaveis acima
         print(f'Rolou a tela {contador +1} vezes')
         contador = contador + 1
+    
+def rolar_tela_horizontal(vezes, start_x, start_y, end_x):
+
+    # start_x = 250
+    # start_y = 1300
+    # end_x = 1000
+    end_y = start_y
+    duration_ms = 200
+
+    contador = 0 
+    while contador < vezes:
+        device.shell(f'input swipe {start_x} {start_y} {end_x} {end_y} {duration_ms}')
+        print(f'Rolou a tela {contador +1} vezes')
+        contador = contador + 1
+
+def abrir_insta():
+
+    device.shell("input keyevent 3")
+    time.sleep(5)
+
+    rolar_tela_vertical(1)
+    rolar_tela_horizontal(2, 250, 1300, 1000)
+    rolar_tela_horizontal(1, 1000, 1300, 250)
+
+    cordenada_icone_insta = "333 696" # x y
+    device.shell(f'input tap {cordenada_icone_insta}')
+
+    time.sleep(3)
+
+    cordenada_home = "110 2270"
+    device.shell(f'input tap {cordenada_home}')
+
+    time.sleep(4)
+
+    rolar_tela_vertical(5)
+
+    time.sleep(5)
+    device.shell("input keyevent 3")
 
 def abir_navegador(url):
-    device, client = connect()
 
     time.sleep(2)
 
@@ -61,4 +79,4 @@ def abir_navegador(url):
     device.shell('input keyevent 66')# aperta enter
     print("enter")
 
-abir_navegador("https://instagram.com/felipedantas043")
+abrir_insta()

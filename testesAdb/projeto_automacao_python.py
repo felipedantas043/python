@@ -10,8 +10,8 @@ def rolar_tela_vertical(vezes):
     start_x = 500
     start_y = 1500
     end_x = 500
-    end_y = 700
-    duration_ms = 300
+    end_y = 660
+    duration_ms = 400
 
     
     #loop para rolar a tela varias vezes
@@ -35,7 +35,7 @@ def rolar_tela_horizontal(vezes, start_x, start_y, end_x):
         print(f'Rolou a tela {contador +1} vezes')
         contador = contador + 1
 
-def abrir_insta():
+def abrir_insta(hashtag):
 
     device.shell("input keyevent 3")
     time.sleep(5)
@@ -52,7 +52,31 @@ def abrir_insta():
     cordenada_home = "110 2270"
     device.shell(f'input tap {cordenada_home}')
 
-    time.sleep(4)
+    time.sleep(2)
+
+    cordenada_serch_icon = "340 2270"
+    device.shell(f'input tap {cordenada_serch_icon}')
+    time.sleep(1)
+    device.shell(f'input tap {cordenada_serch_icon}')
+
+    cordenada_serch = "500 150"
+    device.shell(f'input tap {cordenada_serch}')
+    time.sleep(2)
+    device.shell("input tap 990 150")
+    time.sleep(2)
+    device.shell(f'input text "#{hashtag}"')
+    time.sleep(2)
+    device.shell('input tap 500 380')
+    time.sleep(3)
+    device.shell("input tap 830 518")
+    time.sleep(2)
+    device.shell("input tap 130 751")
+    time.sleep(2)
+    device.shell("input tap 53 1440")
+    time.sleep(2)
+    
+
+    time.sleep(2)
 
     rolar_tela_vertical(5)
 
@@ -79,4 +103,4 @@ def abir_navegador(url):
     device.shell('input keyevent 66')# aperta enter
     print("enter")
 
-abrir_insta()
+# abrir_insta("jiujitsu")

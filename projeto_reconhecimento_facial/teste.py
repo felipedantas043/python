@@ -1,13 +1,10 @@
 import cv2 as cv 
 
-camera = cv.VideoCapture(0)
+cap = cv.VideoCapture("C:\Users\felipe\Videos\felipe.mp4")
 rodando = True
 
-while rodando:
+ret, frame = cap.read()
+cap.release()
 
-    status, frame = camera.read()
-
-    if not status or cv.waitKey(1) & 0xff == ord('q'):
-        rodando = False
-
-    cv.imshow("Camera", frame)
+cv.imshow('frame', frame)
+cv.waitKey(1)
